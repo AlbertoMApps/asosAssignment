@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">asosAssignment</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_wishlist">whislist</string>
+    <string name="action_basket">basket</string>
+
+    <string name="mensCat_string">Shop Men</string>
+    <string name="womenCat_string">Shop Women</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

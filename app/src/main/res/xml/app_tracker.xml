@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- End current session if app sleeps for a period of time -->
+    <integer name="ga_sessionTimeout">3000</integer>
+
+    <!--https://developers.google.com/android/reference/com/google/android/gms/analytics/Tracker-->
+    <!-- Enable automatic Activity measurement -->≠
+    <bool name="ga_autoActivityTracking">true</bool>
+
+    <!--The local LogLevel for analytics-->
+    <string name="ga_logLevel">verbose</string>
+
+    <!--treat events as test events and don-t send to google-->
+    <bool name="ga_dryRun">true</bool>
+
+    <!--  The property id associated with this analytics tracker -->
+    <string name="ga_trackingId">UA-72015892-2</string>
+
+    <string name="ga_sampleFrequency">100.0</string>
+
+    <!--reporting exceptions to analyticts-->
+    <bool name="ga_reportUncaughtExceptions">true</bool>
+
+    <!--ga_activity tracking should be false for only tracking specific activities-->
+    <screenName name="com.example.tae_user0.asosassignment.MainActivity">Home Screen</screenName>
+
+
+    <!--
+      See Project Structure -> Analytics -> Google Analytics -> Learn More
+      to learn more about configuring this file.
+    -->
+</resources>

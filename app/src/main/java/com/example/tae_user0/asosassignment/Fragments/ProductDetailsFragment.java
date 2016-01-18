@@ -1,6 +1,7 @@
 package com.example.tae_user0.asosassignment.Fragments;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,24 +9,30 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.tae_user0.asosassignment.Adapter.ScreenSlidePagerAdapter;
 import com.example.tae_user0.asosassignment.R;
+import com.example.tae_user0.asosassignment.api.itemClickListener3;
 import com.example.tae_user0.asosassignment.model.modelAPI3.ProductDetailsModel;
 
 /**
  * Created by TAE_user0 on 26/12/2015.
  */
 
-public class ProductDetailsFragment extends Fragment {
+public class ProductDetailsFragment extends Fragment implements View.OnClickListener {
 
     private ProductDetailsModel productDetailsModel;
+    private TextView txtAddBag;
+    private String txtProdName, price;
+    private itemClickListener3 click3;
+    private int cont ;
    // private RecyclerView recyclerView;
     //private productDetailsAdapter mAdapter;
-    private com.example.tae_user0.asosassignment.api.itemClickListener itemClickListener;
 
     public ProductDetailsFragment(){
-
     }
 
     @Override
@@ -38,6 +45,7 @@ public class ProductDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_product_details, container, false);
+        this.click3 = (itemClickListener3)getActivity();//instance of the itemClick
         //gridLayoutModel3(getProductDetailsModel(), rootView);
 
         // Instantiate a ViewPager and a PagerAdapter.
@@ -49,8 +57,11 @@ public class ProductDetailsFragment extends Fragment {
         TextView txtStock = (TextView) rootView.findViewById(R.id.txtStock);
         TextView txtSet = (TextView) rootView.findViewById(R.id.txtSet);
         TextView txtAddInfo = (TextView) rootView.findViewById(R.id.txtAddInfo);
-        TextView txtAddBag = (TextView) rootView.findViewById(R.id.btnAddBag);
-         txtTitle.setText(this.productDetailsModel.getTitle());
+        txtAddBag = (TextView) rootView.findViewById(R.id.btnAddBag);
+        //Initialization of strings that we are going to reuse, like prodTitle and produPrice
+        this.txtProdName = this.getProductDetailsModel().getTitle();
+        this.price = this.getProductDetailsModel().getCurrentPrice();
+        txtTitle.setText(txtProdName);
         if( this.getProductDetailsModel().getInStock())
             txtStock.setText("In Stock");
         else
@@ -60,7 +71,8 @@ public class ProductDetailsFragment extends Fragment {
         else
             txtSet.setText("Not in set");
         txtAddInfo.setText(this.getProductDetailsModel().getAdditionalInfo());
-        txtAddBag.setText("Add to bag "+getProductDetailsModel().getCurrentPrice());
+        txtAddBag.setText("Add to bag " + price);
+        txtAddBag.setOnClickListener((View.OnClickListener) this);
 
         return rootView;
     }
@@ -85,6 +97,15 @@ public class ProductDetailsFragment extends Fragment {
     public ProductDetailsModel getProductDetailsModel(){
         return this.productDetailsModel;
     }
+//    public void setClick3(itemClickListener3 click3){
+//        this.click3=click3;
+//    }
 
-
+    @Override
+    public void onClick(View v) {
+        //setClick3( );
+        cont++;
+        this.click3.addBagBtn(this.txtProdName, this.price, cont);
+        //Toast.makeText(getContext(), "Button Add bag clicked", Toast.LENGTH_SHORT).show();
+    }
 }

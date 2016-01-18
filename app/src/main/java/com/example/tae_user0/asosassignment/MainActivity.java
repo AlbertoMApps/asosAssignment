@@ -1,6 +1,8 @@
 package com.example.tae_user0.asosassignment;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -29,13 +31,11 @@ import com.example.tae_user0.asosassignment.api.iProductsByID;
 import com.example.tae_user0.asosassignment.api.iWomenCats;
 import com.example.tae_user0.asosassignment.api.itemClickListener;
 import com.example.tae_user0.asosassignment.api.itemClickListener2;
-import com.example.tae_user0.asosassignment.app.MyApplication;
+import com.example.tae_user0.asosassignment.api.itemClickListener3;
 import com.example.tae_user0.asosassignment.model.modelAPI1.Listing;
 import com.example.tae_user0.asosassignment.model.modelAPI1.MainModel;
 import com.example.tae_user0.asosassignment.model.modelAPI2.ProductsByIDModel;
 import com.example.tae_user0.asosassignment.model.modelAPI3.ProductDetailsModel;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class MainActivity extends AppCompatActivity implements itemClickListener, itemClickListener2 {
+public class  MainActivity extends AppCompatActivity implements itemClickListener, itemClickListener2, itemClickListener3 {
     //Defining Variables
     private Toolbar toolbar;
     private NavigationView navigationView;
@@ -59,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements itemClickListener
     private iProductsByID productsID;
     private iProductDetail productDetail;
     private itemClickListener itemClickListener;
+    private String prodName;
+    private String price;
+    private int cont;
 //    private itemClickListener2 itemClick2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,10 +178,8 @@ public class MainActivity extends AppCompatActivity implements itemClickListener
              startActivity(i);
              return true;**/
         } else if (id == R.id.basket) {
-            Toast.makeText(this, "Basket Clicked", Toast.LENGTH_LONG).show();
-            /**Intent i=new Intent(MainActivity.this,DetailScreen.class);
-             startActivity(i);
-             return true;**/
+            AlertDialog a = createSingleListDialog();
+            a.show();
 
         } else {
             drawerLayout.openDrawer(GravityCompat.START);
@@ -295,9 +296,6 @@ public class MainActivity extends AppCompatActivity implements itemClickListener
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_products_id, prodFragment, "fragment");
                 fragmentTransaction.commit();
-
-
-
             }
 
             @Override
@@ -305,6 +303,14 @@ public class MainActivity extends AppCompatActivity implements itemClickListener
                 errorMessage();
             }
         });
+    }
+    //click on the btnAddBag
+    @Override
+    public void addBagBtn(String prod, String price, int cont) {
+        Toast.makeText(this, prod +cont, Toast.LENGTH_SHORT).show();
+        this.prodName = prod;
+        this.price =price;
+        this.cont = cont;
     }
 
                                         //**********Methods*********//
@@ -324,8 +330,37 @@ public class MainActivity extends AppCompatActivity implements itemClickListener
     }
     //error message to display in case there's an error clicking one of the btns
     public void errorMessage(){
-        Toast.makeText(MainActivity.this, "failure chargin data", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "failure charging data", Toast.LENGTH_SHORT).show();
     }
+
+    public AlertDialog createSingleListDialog() {
+        final CharSequence[] items = {this.prodName +" "+ this.price+","};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Cart View")
+                .setCancelable(true)
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+                        items[item]=null;
+                        Toast.makeText(getApplicationContext(), "You have deleted : " + items[item], Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                        dialog.cancel();
+                    }
+                })
+                .setPositiveButton("Purchase", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // MainActivity.this.finish();
+                        Toast.makeText(MainActivity.this, "Purchase selected", Toast.LENGTH_SHORT);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                        dialog.cancel();
+                    }
+                });
+         return builder.create();
+    }
+
 //click on navigation items
 
 //    @Override

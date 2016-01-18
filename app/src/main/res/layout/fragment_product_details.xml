@@ -71,6 +71,8 @@
                 android:text="Add to bag"
                 android:layout_gravity="center"
                 android:layout_marginLeft="50dp"
+                android:onClick="btnAdd"
+                android:clickable="true"
 
                 />
         </LinearLayout>
